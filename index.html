@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio - Computer Engineering Student" />
+  <title>Portfolio | CE Student</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ── Navigation ─────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-logo" id="nav-logo">
+        <span>~/</span><span id="nav-name-short">portfolio</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#hero">Homes</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certificates">Certs</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-admin-btn" onclick="window.open('admin.html','_blank')">
+        ✎ Edit
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-eyebrow">Computer Engineering Student</div>
+          <h1 class="hero-name" id="hero-name">Loading...</h1>
+          <div class="hero-title" id="hero-title"></div>
+          <p class="hero-bio" id="hero-bio"></p>
+          <div class="hero-meta" id="hero-meta"></div>
+          <div class="hero-actions" id="hero-actions"></div>
+        </div>
+
+        <div class="hero-avatar-wrap">
+          <div class="hero-avatar" id="hero-avatar">
+            <div class="hero-thumb-placeholder">👨‍💻</div>
+          </div>
+          <div class="hero-stat-cards" id="hero-stat-cards"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats Bar ───────────────────────────────────────────── -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-grid" id="stats-grid">
+        <!-- filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Skills ──────────────────────────────────────────────── -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-tag">Tech Stack</div>
+        <h2 class="section-title">Skills &amp; Tools</h2>
+      </div>
+      <div class="skills-filter" id="skills-filter"></div>
+      <div class="skills-grid" id="skills-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── Projects ────────────────────────────────────────────── -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-tag">Portfolio</div>
+        <h2 class="section-title">Projects</h2>
+      </div>
+      <div class="era-tabs" id="era-tabs"></div>
+      <div class="projects-grid" id="projects-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── Certificates ────────────────────────────────────────── -->
+  <section id="certificates">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-tag">Credentials</div>
+        <h2 class="section-title">Certificates</h2>
+      </div>
+      <div class="certs-grid" id="certs-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── Experience ──────────────────────────────────────────── -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-tag">Journey</div>
+        <h2 class="section-title">Experience &amp; Activities</h2>
+      </div>
+      <div class="exp-timeline" id="exp-timeline"></div>
+    </div>
+  </section>
+
+  <!-- ── Contact ─────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-tag">Say Hello</div>
+        <h2 class="section-title">Contact</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-text">
+          <h3>Let's connect! 🚀</h3>
+          <p id="contact-bio">ยินดีรับโอกาสร่วมงาน ฝึกงาน หรือแลกเปลี่ยนความคิดเห็น</p>
+          <div class="contact-links" id="contact-links"></div>
+        </div>
+        <div class="contact-info-box" id="contact-info-box">
+          <!-- JSON-style card filled by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ──────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <p>Built with ❤️ by <span id="footer-name">CE Student</span> · <span id="footer-year"></span></p>
+      <p style="margin-top:0.5rem;font-size:11px">Made with HTML · CSS · Vanilla JS — No frameworks needed 🛠️</p>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ── Scripts ─────────────────────────────────────────────── -->
+  <script src="data.js"></script>
+  <script>
+    // ============================================================
+    //  main.js — Render portfolio from PORTFOLIO_DATA
+    // ============================================================
+
+    const D = PORTFOLIO_DATA;
+
+    // ── Helpers ─────────────────────────────────────────────────
+    function el(id) { return document.getElementById(id); }
+    function qs(sel) { return document.querySelector(sel); }
+
+    const EXP_ICONS = {
+      internship: '💼', club: '🎓', volunteer: '🤝', competition: '🏆',
+    };
+
+    const ERA_LABELS = {
+      all: '⚡ ทั้งหมด',
+      highschool: '🏫 มัธยมปลาย',
+      university: '🎓 มหาวิทยาลัย',
+      personal: '⭐ Personal',
+    };
+
+    const SKILL_CATEGORIES = {
+      all: { label: 'ทั้งหมด', color: 'var(--accent)' },
+      lang: { label: 'Languages', color: 'var(--green)' },
+      framework: { label: 'Frameworks', color: 'var(--purple)' },
+      tool: { label: 'Tools', color: 'var(--orange)' },
+      hardware: { label: 'Hardware', color: '#ff3a6e' },
+      soft: { label: 'Soft Skills', color: '#ffd700' },
+    };
+
+    const PROJECT_EMOJIS = ['🔬', '⚙️', '🤖', '🌐', '📱', '💡', '🛠️', '🔭', '📡', '💻'];
+    function projectEmoji(id) {
+      const h = [...id].reduce((a, c) => a + c.charCodeAt(0), 0);
+      return PROJECT_EMOJIS[h % PROJECT_EMOJIS.length];
+    }
+
+    // ── Nav ─────────────────────────────────────────────────────
+    el('nav-name-short').textContent = D.profile.nameEn.split(' ')[0].toLowerCase();
+
+    // ── Hero ─────────────────────────────────────────────────────
+    el('hero-name').textContent = D.profile.name;
+    el('hero-title').textContent = D.profile.title;
+    el('hero-bio').textContent = D.profile.bio;
+
+    // Avatar
+    const avatarEl = el('hero-avatar');
+    if (D.profile.avatar) {
+      avatarEl.innerHTML = `<img src="${D.profile.avatar}" alt="${D.profile.name}" />`;
+    } else {
+      avatarEl.innerHTML = `<div class="hero-thumb-placeholder">👨‍💻</div>`;
+    }
+
+    // Hero meta badges
+    const metaHTML = [
+      `<div class="hero-badge"><span class="dot"></span>${D.profile.university}</div>`,
+      `<div class="hero-badge">📖 ${D.profile.year}</div>`,
+      `<div class="hero-badge">⭐ GPA ${D.profile.gpa}</div>`,
+    ].join('');
+    el('hero-meta').innerHTML = metaHTML;
+
+    // Hero actions
+    const c = D.profile.contact;
+    let actionsHTML = `<a href="mailto:${c.email}" class="btn btn-primary">✉ ติดต่อฉัน</a>`;
+    if (c.github) actionsHTML += `<a href="${c.github}" target="_blank" class="btn btn-outline">⌥ GitHub</a>`;
+    if (c.linkedin) actionsHTML += `<a href="${c.linkedin}" target="_blank" class="btn btn-outline">in LinkedIn</a>`;
+    el('hero-actions').innerHTML = actionsHTML;
+
+    // Stat cards on avatar
+    el('hero-stat-cards').innerHTML = `
+    <div class="hero-stat-card">${D.projects.length}<span>Projects</span></div>
+    <div class="hero-stat-card">${D.certificates.length}<span>Certificates</span></div>
+  `;
+
+    // ── Stats Bar ────────────────────────────────────────────────
+    const highlighted = D.projects.filter(p => p.highlight).length;
+    const awards = D.projects.filter(p => p.award).length;
+    el('stats-grid').innerHTML = `
+    <div class="stat-item fade-up">
+      <div class="stat-number">${D.projects.length}</div>
+      <div class="stat-label">Projects</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-number">${D.skills.length}</div>
+      <div class="stat-label">Skills</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-number">${D.certificates.length}</div>
+      <div class="stat-label">Certificates</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-number">${awards}</div>
+      <div class="stat-label">Awards</div>
+    </div>
+  `;
+
+    // ── Skills ────────────────────────────────────────────────────
+    let activeSkillCat = 'all';
+    const cats = ['all', ...new Set(D.skills.map(s => s.category))];
+
+    function renderSkillFilter() {
+      el('skills-filter').innerHTML = cats.map(cat => `
+      <button class="filter-btn ${cat === activeSkillCat ? 'active' : ''}"
+              onclick="setSkillCat('${cat}')">
+        ${SKILL_CATEGORIES[cat]?.label || cat}
+      </button>
+    `).join('');
+    }
+
+    function renderSkills() {
+      const list = activeSkillCat === 'all'
+        ? D.skills
+        : D.skills.filter(s => s.category === activeSkillCat);
+
+      el('skills-grid').innerHTML = list.map(s => `
+      <div class="skill-card fade-up">
+        <div class="skill-name">${s.name}</div>
+        <div class="skill-bar">
+          <div class="skill-fill" style="width:${(s.level / 5) * 100}%"></div>
+        </div>
+        <div class="skill-dots">
+          ${[1, 2, 3, 4, 5].map(i =>
+        `<div class="skill-dot ${i <= s.level ? 'filled' : ''}"></div>`
+      ).join('')}
+        </div>
+      </div>
+    `).join('');
+      observeFadeUps();
+    }
+
+    window.setSkillCat = function (cat) {
+      activeSkillCat = cat;
+      renderSkillFilter();
+      renderSkills();
+    };
+
+    renderSkillFilter();
+    renderSkills();
+
+    // ── Projects ──────────────────────────────────────────────────
+    let activeEra = 'all';
+    const eras = ['all', ...new Set(D.projects.map(p => p.era))];
+
+    function renderEraTabs() {
+      el('era-tabs').innerHTML = eras.map(era => `
+      <button class="era-tab ${era === activeEra ? 'active' : ''}"
+              onclick="setEra('${era}')">
+        ${ERA_LABELS[era] || era}
+      </button>
+    `).join('');
+    }
+
+    function renderProjects() {
+      const list = activeEra === 'all'
+        ? D.projects
+        : D.projects.filter(p => p.era === activeEra);
+
+      el('projects-grid').innerHTML = list.map(p => `
+      <div class="project-card ${p.highlight ? 'highlight' : ''} fade-up">
+        <div class="project-thumb">
+          ${p.image
+          ? `<img src="${p.image}" alt="${p.title}" />`
+          : `<div class="project-thumb-placeholder">${projectEmoji(p.id)}</div>`
+        }
+          <div class="project-year-badge">${p.year}</div>
+        </div>
+        <div class="project-body">
+          <div class="project-header">
+            <div>
+              <div class="project-title">${p.title}</div>
+              <div class="project-subtitle">${p.subtitle}</div>
+            </div>
+          </div>
+          <div class="project-desc">${p.description}</div>
+          ${p.award ? `<div class="project-award">🏆 ${p.award}</div>` : ''}
+          <div class="project-tags">
+            ${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          </div>
+        </div>
+        ${p.link ? `
+          <div class="project-footer">
+            <a href="${p.link}" target="_blank" class="project-link">
+              View on GitHub →
+            </a>
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+      observeFadeUps();
+    }
+
+    window.setEra = function (era) {
+      activeEra = era;
+      renderEraTabs();
+      renderProjects();
+    };
+
+    renderEraTabs();
+    renderProjects();
+
+    // ── Certificates ──────────────────────────────────────────────
+    el('certs-grid').innerHTML = D.certificates.map(cert => `
+    <div class="cert-card fade-up">
+      <div class="cert-icon">🎖️</div>
+      <div class="cert-info">
+        <div class="cert-name">${cert.name}</div>
+        <div class="cert-issuer">${cert.issuer}</div>
+      </div>
+      <div class="cert-year">${cert.year}</div>
+    </div>
+  `).join('');
+
+    // ── Experience ────────────────────────────────────────────────
+    el('exp-timeline').innerHTML = D.experiences.map(exp => `
+    <div class="exp-item fade-up">
+      <div class="exp-dot">${EXP_ICONS[exp.type] || '📌'}</div>
+      <div class="exp-content">
+        <div class="exp-header">
+          <div class="exp-title">${exp.title}</div>
+          <div class="exp-period">${exp.period}</div>
+        </div>
+        <div class="exp-org">${exp.organization}</div>
+        <div class="exp-desc">${exp.description}</div>
+      </div>
+    </div>
+  `).join('');
+
+    // ── Contact ───────────────────────────────────────────────────
+    const contactItems = [
+      { icon: '✉️', label: 'Email', val: c.email, href: `mailto:${c.email}` },
+      c.github && { icon: '⌥', label: 'GitHub', val: c.github.replace('https://', ''), href: c.github },
+      c.linkedin && { icon: 'in', label: 'LinkedIn', val: c.linkedin.replace('https://', ''), href: c.linkedin },
+    ].filter(Boolean);
+
+    el('contact-links').innerHTML = contactItems.map(item => `
+    <a href="${item.href}" target="_blank" class="contact-link-item">
+      <div class="contact-link-icon">${item.icon}</div>
+      <div class="contact-link-label">${item.label}</div>
+      <div class="contact-link-val">${item.val}</div>
+    </a>
+  `).join('');
+
+    // JSON-style info box
+    el('contact-info-box').innerHTML = `
+    <div><span class="comment">// ข้อมูลนักศึกษา</span></div>
+    <div><span class="bracket">{</span></div>
+    <div>&nbsp;&nbsp;<span class="key">name:</span> <span class="str">"${D.profile.name}"</span>,</div>
+    <div>&nbsp;&nbsp;<span class="key">university:</span> <span class="str">"${D.profile.university}"</span>,</div>
+    <div>&nbsp;&nbsp;<span class="key">faculty:</span> <span class="str">"${D.profile.faculty}"</span>,</div>
+    <div>&nbsp;&nbsp;<span class="key">year:</span> <span class="str">"${D.profile.year}"</span>,</div>
+    <div>&nbsp;&nbsp;<span class="key">gpa:</span> <span class="num">${D.profile.gpa}</span>,</div>
+    <div>&nbsp;&nbsp;<span class="key">openToWork:</span> <span class="val">true</span>,</div>
+    <div>&nbsp;&nbsp;<span class="key">projects:</span> <span class="num">${D.projects.length}</span>,</div>
+    <div>&nbsp;&nbsp;<span class="key">skills:</span> <span class="num">${D.skills.length}</span>,</div>
+    <div><span class="bracket">}</span></div>
+  `;
+
+    // ── Footer ────────────────────────────────────────────────────
+    el('footer-name').textContent = D.profile.name || 'CE Student';
+    el('footer-year').textContent = new Date().getFullYear();
+
+    // ── Scroll Animations ─────────────────────────────────────────
+    function observeFadeUps() {
+      const items = document.querySelectorAll('.fade-up:not(.observed)');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('visible'), i * 60);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      items.forEach(el => { el.classList.add('observed'); io.observe(el); });
+    }
+
+    observeFadeUps();
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const scrollSpy = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => scrollSpy.observe(s));
+
+    // Toast helper
+    function showToast(msg) {
+      const t = el('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+  </script>
+</body>
+
+</html>
