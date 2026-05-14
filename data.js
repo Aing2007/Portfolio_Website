@@ -10,27 +10,26 @@ const PORTFOLIO_DATA = {
     nameEn: "Sutinun Sriviset",
     title: "Computer Engineering Student",
     subtitle: "Builder · Problem Solver · Lifelong Learner",
-    bio: `นักศึกษาวิศวกรรมคอมพิวเตอร์ที่หลงใหลในการสร้างสิ่งใหม่
-ด้วยโค้ดและความคิดสร้างสรรค์ มีความสนใจในด้าน Full-Stack Development,
-Embedded Systems และ Machine Learning`,
-    university: "มหาวิทยาลัย...",    // ชื่อมหาวิทยาลัย
+    bio: `นักศึกษาวิศวกรรมคอมพิวเตอร์ระดับปริญญาตรี ณ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง`,
+    university: "สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",    // ชื่อมหาวิทยาลัย
     faculty: "คณะวิศวกรรมศาสตร์",
-    year: "ชั้นปีที่ 3",
-    gpa: "3.85",
-    avatar: "",                        // URL รูปภาพ หรือเว้นว่างไว้
+    year: "ชั้นปีที่ 1",
+    gpa: "-",
+    avatar: "Assets/Image/IMG_2690.JPG",                        // URL รูปภาพ หรือเว้นว่างไว้
     contact: {
-      email: "your@email.com",
-      github: "https://github.com/yourusername",
-      linkedin: "https://linkedin.com/in/yourprofile",
-      portfolio: "",
+      email: "sutinunsriviset@gmail.com",
+      github: "https://github.com/Aing2007",
+      linkedin: "#",
+      portfolio: "#",
     },
   },
 
   // ── ทักษะ ──────────────────────────────────────────────────
   skills: [
-    // format: { name, level (1-5), category }
+    // format: { name, category, image? }
+    // optional image: path to icon asset for language/framework
     // category: "lang" | "framework" | "tool" | "hardware" | "soft"
-    { name: "Python", level: 5, category: "lang" },
+    { name: "Python", category: "lang" },
     { name: "C / C++", level: 4, category: "lang" },
     { name: "JavaScript", level: 4, category: "lang" },
     { name: "Java", level: 3, category: "lang" },

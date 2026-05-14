@@ -17,17 +17,17 @@
       <div class="nav-logo" id="nav-logo">
         <span>~/</span><span id="nav-name-short">portfolio</span>
       </div>
-      <ul class="nav-links">
-        <li><a href="#hero">Homes</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#certificates">Certs</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="nav-admin-btn" onclick="window.open('admin.html','_blank')">
-        ✎ Edit
-      </button>
+      <center>
+        <ul class="nav-links">
+          <li><a href="#hero">Homes</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#certificates">Certs</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </center>
+
     </div>
   </nav>
 
@@ -260,15 +260,13 @@
 
       el('skills-grid').innerHTML = list.map(s => `
       <div class="skill-card fade-up">
+        ${s.image ? `
+          <div class="skill-icon">
+            <img src="${s.image}" alt="${s.name}" />
+          </div>
+        ` : ''}
         <div class="skill-name">${s.name}</div>
-        <div class="skill-bar">
-          <div class="skill-fill" style="width:${(s.level / 5) * 100}%"></div>
-        </div>
-        <div class="skill-dots">
-          ${[1, 2, 3, 4, 5].map(i =>
-        `<div class="skill-dot ${i <= s.level ? 'filled' : ''}"></div>`
-      ).join('')}
-        </div>
+        ${s.category ? `<div class="skill-meta">${SKILL_CATEGORIES[s.category]?.label || s.category}</div>` : ''}
       </div>
     `).join('');
       observeFadeUps();
