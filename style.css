@@ -813,6 +813,11 @@ section {
   transform: translateX(4px);
 }
 
+.cert-card:hover .cert-issuer,
+.cert-card:hover .cert-year {
+  opacity: 1;
+}
+
 .cert-icon {
   width: 42px;
   height: 42px;
@@ -842,12 +847,17 @@ section {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--text-3);
+  opacity: 0;
+  transition: opacity var(--transition);
 }
 
 .cert-year {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--green);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
 }
 
 /* ── Experience Section ─────────────────────────────────────── */

@@ -260,11 +260,6 @@
 
       el('skills-grid').innerHTML = list.map(s => `
       <div class="skill-card fade-up">
-        ${s.image ? `
-          <div class="skill-icon">
-            <img src="${s.image}" alt="${s.name}" />
-          </div>
-        ` : ''}
         <div class="skill-name">${s.name}</div>
         ${s.category ? `<div class="skill-meta">${SKILL_CATEGORIES[s.category]?.label || s.category}</div>` : ''}
       </div>

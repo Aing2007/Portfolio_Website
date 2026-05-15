@@ -37,8 +37,6 @@ const PORTFOLIO_DATA = {
     { name: "VScode", level: 3, category: "tool", image: "Assets/Icon/VScode.png" },
     { name: "Arduino", level: 4, category: "hardware", image: "Assets/Icon/Arduino.png" },
     { name: "Raspberry Pi", level: 3, category: "hardware", image: "Assets/Icon/raspberry.png" },
-    { name: "Teamwork", level: 5, category: "soft" },
-    { name: "Problem Solving", level: 5, category: "soft" },
   ],
 
   // ── ผลงาน / โปรเจกต์ ──────────────────────────────────────
@@ -135,6 +133,7 @@ const PORTFOLIO_DATA = {
       name: "AWS Cloud Practitioner",
       issuer: "Amazon Web Services",
       year: "2567",
+      image: "",
       link: "",
     },
     {
@@ -142,6 +141,7 @@ const PORTFOLIO_DATA = {
       name: "Google Data Analytics Certificate",
       issuer: "Google / Coursera",
       year: "2566",
+      image: "",
       link: "",
     },
     {
@@ -149,6 +149,7 @@ const PORTFOLIO_DATA = {
       name: "TOEIC 800+",
       issuer: "ETS",
       year: "2566",
+      image: "",
       link: "",
     },
   ],
